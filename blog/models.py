@@ -47,9 +47,4 @@ class BlogComment(models.Model):
         ordering = ['post_date']
 
     def __str__(self):
-        len_title = 75
-        if len(self.description) > len_title:
-            titlestring = self.description[:len_title] + '...'
-        else:
-            titlestring = self.description
-        return titlestring
+        return self.description

@@ -14,17 +14,16 @@ class BlogAuthor(models.Model):
         ordering = ['user', 'bio']
 
     def get_absolute_url(self):
-        return reverse('blog-by-author', args=[str(self.id)])
+        return reverse('blogs-by-author', args=[str(self.id)])
 
     def __str__(self):
-        # return f'{self.user}, {self.bio}'
         return self.user.username
 
 
 class Blog(models.Model):
     name = models.CharField(max_length=500)
     author = ForeignKey(BlogAuthor, on_delete=models.SET_NULL, null=True)
-    description = models.TextField(max_length=500, help_text='Enter your blog text')
+    description = models.TextField(max_length=1000, help_text='Enter your blog text')
     post_date = models.DateField(default=date.today())
 
     class Meta:
@@ -41,10 +40,10 @@ class BlogComment(models.Model):
     description = models.TextField(max_length=1000, help_text='Enter comments for your blog')
     author = ForeignKey(BlogAuthor, on_delete=models.SET_NULL, null=True)
     blog = ForeignKey(Blog, on_delete=models.CASCADE)
-    post_date = models.DateField(auto_now_add=True)
-
-    class Meta:
-        ordering = ['post_date']
+    post_date = models.DateTimeField(auto_now_add=True, blank=True,)
 
     def __str__(self):
-        return self.description
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse('blog', args=[str(self.blog.id)])

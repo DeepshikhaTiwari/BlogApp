@@ -3,15 +3,20 @@ from blog.models import Blog, BlogAuthor, BlogComment
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView
-from django.urls import reverse
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
 
 
 def index(request):
-    return render(
-        request,
-        'index.html'
-    )
+    num_blogs = Blog.objects.all().count()
+    num_author = BlogAuthor.objects.all().count()
+    num_bloggers = BlogComment.objects.all().count()
+    context = {
+        'num_blogs': num_blogs,
+        'num_author': num_author,
+        'num_bloggers': num_bloggers,
+    }
+    return render(request, 'index.html', context=context)
 
 
 class BlogListView(generic.ListView):
@@ -46,17 +51,31 @@ class BloggerListView(generic.ListView):
 
 class BlogCommentCreate(LoginRequiredMixin, CreateView):
     model = BlogComment
-    fields = ['description', ]
+    fields = ['description']
+    success_url = '/'
 
-    def get_context_data(self, **kwargs):
-        context = super(BlogCommentCreate, self).get_context_data(**kwargs)
-        context['blog'] = get_object_or_404(Blog, pk=self.kwargs['pk'])
-        return context
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.blog = get_object_or_404(Blog, pk=self.kwargs['pk'])
-        return super(BlogCommentCreate, self).form_valid(form)
+class BlogCommentUpdate(UpdateView):
+    model = Blog
+    fields = '__all__'
 
-    def get_success_url(self):
-        return reverse('blog-detail', kwargs={'pk': self.kwargs['pk'], })
+
+class BlogCommentDelete(DeleteView):
+    model = Blog
+    success_url = reverse_lazy('blogs')
+
+
+class BlogCreate(CreateView):
+    model = Blog
+    fields = ['name', 'author', 'description', 'post_date']
+    initial = {'name': ''}
+
+
+class BlogUpdate(LoginRequiredMixin, UpdateView):
+    model = Blog
+    fields = '__all__'
+
+
+class BlogDelete(DeleteView):
+    model = Blog
+    success_url = reverse_lazy('blogs')

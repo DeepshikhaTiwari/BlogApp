@@ -40,7 +40,7 @@ class BlogComment(models.Model):
     description = models.TextField(max_length=1000, help_text='Enter comments for your blog')
     author = ForeignKey(BlogAuthor, on_delete=models.SET_NULL, null=True)
     blog = ForeignKey(Blog, on_delete=models.CASCADE)
-    post_date = models.DateTimeField(auto_now_add=True, blank=True,)
+    post_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.comment

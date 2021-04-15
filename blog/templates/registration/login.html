@@ -3,7 +3,6 @@
 {% block content %}
 <br>
 <br>
-<div style="text-align: center;">
   {% if form.errors %}
     <p>Your username and password didn't match. Please try again.</p>
   {% endif %}
@@ -38,4 +37,3 @@
   <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
 {% endblock %}
-</div>

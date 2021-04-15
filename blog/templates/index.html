@@ -1,12 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 {% extends "base_generic.html" %}
 
 {% block content %}
+<br>
+<div style="text-align: center;">
+<h1>Welcome to <em>Blogs App</em> for all the bloggers out there. </h1>
 
-<h1>DIY Blog Home</h1>
-
-<p>Welcome to <em>DIY Blog</em> a blog app for the bloggers out there. </p>
-<h2>Dynamic content</h2>
-  <p>The Blog app has the following record counts:</p>
+  <h3>The Blog app has the following record counts:</h3>
   <ul>
     <li><strong>Blog:</strong> {{ num_blogs }}</li>
     <li><strong>Author:</strong> {{ num_author }}</li>
@@ -14,3 +16,6 @@
   </ul>
 
 {% endblock %}
+</div>
+</head>
+</html>

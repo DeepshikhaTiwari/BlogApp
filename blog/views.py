@@ -1,10 +1,15 @@
-from django.shortcuts import render
-from blog.models import Blog, BlogAuthor, BlogComment
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from .models import Blog, BlogAuthor, BlogComment
 from django.views import generic
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from .forms import SignUpForm
 
 
 def index(request):
@@ -58,6 +63,25 @@ class BlogCommentCreate(LoginRequiredMixin, CreateView):
 class BlogCommentUpdate(UpdateView):
     model = Blog
     fields = '__all__'
+
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            password1 = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password1)
+            if user is not None:
+                login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+                return redirect('index')
+            else:
+                return HttpResponse("Invalid username & password")
+
+    else:
+        form = SignUpForm()
+    return render(request, 'registration/signup.html', {'form': form})
 
 
 class BlogCommentDelete(DeleteView):

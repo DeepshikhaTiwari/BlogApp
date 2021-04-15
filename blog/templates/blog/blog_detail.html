@@ -3,7 +3,6 @@
 {% block content %}
 <br>
 <br>
-<div style="text-align: center;">
 <h1>{{ blog.name }}</h1>
 <p><strong>Post date</strong> {{ blog.post_date }}</p>
 <p><strong>Author:</strong> <a href="{% url 'blogs-by-author' blog.author.pk %}">{{ blog.author }}</a></p>
@@ -25,6 +24,5 @@
 
 {% endfor %}
 
-</div>
 </div>
 {% endblock %}

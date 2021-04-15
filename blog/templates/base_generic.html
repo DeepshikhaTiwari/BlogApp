@@ -23,21 +23,59 @@
   <div class="col-sm-2">
   {% block sidebar %}
   <ul class="sidebar-nav">
-    <li><a href="{% url 'index' %}">Home</a></li>
-    <li><a href="{% url 'blogs' %}">All blogs</a></li>
-    <li><a href="{% url 'bloggers' %}">All bloggers</a></li>
-      <li><a href="{% url 'blog-create' %}">Create new blog</a></li>
 
-  </ul>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  <ul class="sidebar-nav">
-   {% if user.is_authenticated %}
-     <li>User: {{ user.get_username }}</li>
-     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-   {% else %}
-     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-   {% endif %}
-  </ul>
+      <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                       <i class="fa fa-bars"></i>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                               <li class="nav-item active">
+                                <a class="nav-link" href="{% url 'index' %}">HOME<span class="sr-only">(current)</span></a> </li>
+                               <li class="nav-item">
+                                <a class="nav-link" href="{% url 'blogs' %}">BLOGS</a></li>
+                               <li class="nav-item">
+                                <a class="nav-link" href="{% url 'bloggers' %}">BLOGGERS</a></li>
+                                <li><a class="#" href="{% url 'blog-create' %}">CREATE A BLOG</a></li>
+
+                                <ul class="sidebar-nav">
+                                     <li><a class="nav-link" href="{% url 'signup' %}">Signup</a></li>
+                                {% if user.is_authenticated %}
+                                 <li>User: {{ user.get_username }}</li>
+                                    <li><a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                                        {% else %}
+                                    <li><a class="nav-link" href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+                                    {% endif %}
+                                </ul>
+                            </ul>
+                        </div>
+                    </nav>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+<!--    <li><a href="{% url 'index' %}">Home</a></li>-->
+<!--    <li><a href="{% url 'blogs' %}">All blogs</a></li>-->
+<!--    <li><a href="{% url 'bloggers' %}">All bloggers</a></li>-->
+<!--      <li><a href="{% url 'blog-create' %}">Create new blog</a></li>-->
+<!--        <li><a href="{% url 'signup' %}">Signup</a></li>-->
+<!--  </ul>-->
+
+<!--  <ul class="sidebar-nav">-->
+<!--   {% if user.is_authenticated %}-->
+<!--     <li>User: {{ user.get_username }}</li>-->
+<!--     <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>-->
+<!--   {% else %}-->
+<!--     <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>-->
+<!--   {% endif %}-->
+<!--  </ul>-->
 
   {% endblock %}
 

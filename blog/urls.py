@@ -16,4 +16,6 @@ urlpatterns = [
     path('blog/<int:pk>/update/', views.BlogUpdate.as_view(), name='blog-update'),
     path('blog/<int:pk>/delete/', views.BlogDelete.as_view(), name='blog-delete'),
 
+    path('signup/', views.signup, name='signup'),
+
 ]
